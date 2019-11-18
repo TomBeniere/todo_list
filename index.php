@@ -1,5 +1,5 @@
 <?php
-// Code here...
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +19,7 @@
     <main class="text-gray-800">
        <section class="md:w-2/3 lg:w-1/3 mx-auto mt-4">
             <div class="add text-center p-2">
-                <form>
+                <form action="traitement.php" method="post">
                     <input type="text" name="todo" value="" class="border p-2 rounded" placeholder="Nouvel item">
                     <input type="submit" value="Ajouter" class="py-2 px-4 rounded bg-green-500 text-white">
                 </form>
