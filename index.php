@@ -1,6 +1,9 @@
 <?php
-	$bdd = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
+session_start();
+    if (!isset($_SESSION['id'])) {
+        header('Location: login.php');
+    }        
+    $bdd = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,13 +11,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Formulaire</title>
+    <title>ToDo list</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/c1d0ab37d6.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header class="bg-blue-500 text-white p-4 text-center">
         <h1>TO-DO List</h1>
+        <p>Connected on <span style="color:red;"><?php echo $_SESSION['pseudo']; ?></span></p>
+        <form action="traitement-logout.php" method="post">
+        <button type="submit" style="padding:0.5rem;background-color:red;">Logout</button>
+        </form>
     </header>
 
     <main class="text-gray-800">
