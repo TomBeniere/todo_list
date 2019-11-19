@@ -7,14 +7,38 @@ catch(Exception $e)
 {
         die('Erreur : '.$e->getMessage());
 }
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-$req = $bdd->prepare('INSERT INTO taches(ToDo) VALUES(:todo)');
-$req->execute(array(
-    'todo' => $_POST['todo']
-	));
 
-    
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+if (isset($_POST['todo'])) {
+ $req = $bdd->prepare('INSERT INTO taches(todo) VALUES(:todo)');
+ $req->execute(array(
+     'todo' => $_POST['todo']
+    ));
 }
+elseif (isset($_POST['update'])) {
+$req = $bdd->prepare('UPDATE taches SET todo = ? WHERE id = ?');
+$req->execute(array(
+    $_POST['update'],
+    $_POST['id']
+    ));   
+    }
+
+elseif (isset($_POST['delete'])) {
+    $req = $bdd->prepare('DELETE FROM taches WHERE id = :id');
+    $req->execute(array(
+        "id"=>$_POST['delete'],
+        ));   
+}  
+}
+
+// function test_input($data) {
+//     $data = trim($data);
+//     $data = stripslashes($data);
+//     $data = htmlspecialchars($data);
+//     return $data;
+// }
 
 header('Location: index.php');
 ?>
