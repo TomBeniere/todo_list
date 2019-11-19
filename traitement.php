@@ -11,34 +11,34 @@ catch(Exception $e)
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-if (isset($_POST['todo'])) {
+if (isset($_POST['todo']) && !empty($_POST['todo'])) {
  $req = $bdd->prepare('INSERT INTO taches(todo) VALUES(:todo)');
  $req->execute(array(
-     'todo' => $_POST['todo']
+     'todo' => test_input($_POST['todo'])
     ));
 }
 elseif (isset($_POST['update'])) {
 $req = $bdd->prepare('UPDATE taches SET todo = ? WHERE id = ?');
 $req->execute(array(
-    $_POST['update'],
-    $_POST['id']
+    test_input($_POST['update']),
+    test_input($_POST['id'])
     ));   
     }
 
 elseif (isset($_POST['delete'])) {
     $req = $bdd->prepare('DELETE FROM taches WHERE id = :id');
     $req->execute(array(
-        "id"=>$_POST['delete'],
+        "id"=>test_input($_POST['delete']),
         ));   
 }  
 }
 
-// function test_input($data) {
-//     $data = trim($data);
-//     $data = stripslashes($data);
-//     $data = htmlspecialchars($data);
-//     return $data;
-// }
+ function test_input($data) {
+     $data = trim($data);
+     $data = stripslashes($data);
+     $data = htmlspecialchars($data);
+     return $data;
+ }
 
 header('Location: index.php');
 ?>
