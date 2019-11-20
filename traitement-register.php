@@ -9,8 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     {
             die('Erreur : '.$e->getMessage());
     }
+    $response = $bdd->prepare('SELECT * FROM user WHERE pseudo = :pseudo');
 
-    if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['password']) && !empty($_POST['password'])) {
+    $response->execute(array(
+        "pseudo" => $_POST["pseudo"]
+    ));
+    $user = $response->fetch();
+    
+    if (isset($_POST['pseudo']) && $_POST['pseudo'] != $user['pseudo'] && !empty($_POST['pseudo']) && isset($_POST['password']) && !empty($_POST['password'])) {
         $req = $bdd->prepare('INSERT INTO user(pseudo , password) VALUES(:pseudo , :password)');
         $req->execute(array(
             'pseudo' => test_input($_POST['pseudo']),
