@@ -5,7 +5,7 @@ session_start();
     }        
     try
     {
-        $bdd = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=todolist;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
     catch(Exception $e)
     {
@@ -43,9 +43,11 @@ session_start();
             <table class="w-full mt-2">
 
                 <?php
-                    $reponse = $bdd->query('SELECT * FROM taches');
+                    $reponse = $bdd->prepare('SELECT * FROM taches WHERE userid = :userid');
 
-                    // On affiche chaque entrée une à une
+                    $reponse->execute(array(
+                        "userid" => $_SESSION['id']
+                    ));
                     while ($donnees = $reponse->fetch())
                     {
                     ?>

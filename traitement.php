@@ -3,17 +3,18 @@
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     try
     {
-        $bdd = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=todolist;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
     catch(Exception $e)
     {
             die('Erreur : '.$e->getMessage());
     }
-
+session_start();
 if (isset($_POST['todo']) && !empty($_POST['todo'])) {
- $req = $bdd->prepare('INSERT INTO taches(todo) VALUES(:todo)');
- $req->execute(array(
-     'todo' => test_input($_POST['todo'])
+ $req = $bdd->prepare('INSERT INTO taches(todo, userid) VALUES(:todo, :userid)');
+ $req->execute(array(   
+     'todo' => test_input($_POST['todo']),
+    'userid' => $_SESSION['id'],
     ));
 }
 elseif (isset($_POST['update'])) {

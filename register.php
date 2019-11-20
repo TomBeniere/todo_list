@@ -19,5 +19,8 @@
     <button type="submit">Register</button>
     </form>
     </main>
+    <footer>
+    <a href="login.php">Login Now !</a>
+    </footer>
 </body>
 </html>
