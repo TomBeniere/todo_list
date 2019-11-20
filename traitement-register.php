@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             'password' => password_hash(test_input($_POST['password']), PASSWORD_DEFAULT)
            ));
        }    
-    
+       header('Location: login.php');
 }
 
 
@@ -34,5 +34,5 @@ function test_input($data) {
     return $data;
 }
 
-header('Location: login.php');
+header('Location: index.php');
 ?>
