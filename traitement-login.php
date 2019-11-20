@@ -16,11 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             "pseudo" => $_POST["pseudo"]
         ));
         $user = $response->fetch();
-        if (password_verify($_POST['password'], $user["password"])) {
-            session_start();
-            $_SESSION['id'] = $user["id"];
-            $_SESSION['pseudo'] = $user['pseudo'];
+        if ($user) {
+            if (password_verify($_POST['password'], $user["password"])) {
+                session_start();
+                $_SESSION['id'] = $user["id"];
+                $_SESSION['pseudo'] = $user['pseudo'];
+            }
         }
+        
 
     }
     header('Location: index.php');
